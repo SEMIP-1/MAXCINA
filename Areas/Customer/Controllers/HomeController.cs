@@ -48,7 +48,13 @@ namespace MAXCINA.Areas.Customer.Controllers
             {
                 return RedirectToAction(nameof(NotfoundPage));
             }
-            return View(_movies);
+            var _similarMovies = _context.Movies.Include(m => m.Category).Where(m => m.CategoryId == _movies.CategoryId && m.MoviesId != id).Skip(0).Take(4);
+
+            return View(new MovieDetailsVM() 
+            {
+                Movie = _movies,
+                SimilarMovies = _similarMovies.ToList()
+            });
         }
         public IActionResult Cinema()
         {
@@ -62,7 +68,13 @@ namespace MAXCINA.Areas.Customer.Controllers
             {
                 return RedirectToAction(nameof(NotfoundPage));
             }
-            return View(_Cinmas);
+            var _similarMovies = _context.Movies.Include(m => m.Category).Where(m => m.CinemaId == _Cinmas.Id);
+
+            return View(new CinemaDetailsVM() 
+            {
+                cinema = _Cinmas,
+                AvillableMovies = _similarMovies.ToList()
+            });
         }
     }
 }
