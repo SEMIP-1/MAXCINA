@@ -2,8 +2,9 @@ using System.Diagnostics;
 using MAXCINA.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MAXCINA.Controllers
+namespace MAXCINA.Areas.Customer.Controllers
 {
+    [Area(SD.Area_Customer)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
