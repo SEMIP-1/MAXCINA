@@ -2,8 +2,8 @@
 {
     public enum MovieStatus
     {
-        Upcoming,
-        Available,
-        Expired
+        Upcoming = 1,
+        Available = 2 ,
+        Expired = 3
     }
 }

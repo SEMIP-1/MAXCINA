@@ -13,16 +13,12 @@
     <Folder Include="Areas\Identity\Controllers\" />
     <Folder Include="Areas\Identity\Data\" />
     <Folder Include="Areas\Identity\Models\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="wwwroot\assets\admin\" />
     <Folder Include="wwwroot\assets\customer\" />
-    <Folder Include="wwwroot\css\admin\" />
     <Folder Include="wwwroot\img\admin\" />
-    <Folder Include="wwwroot\js\admin\" />
   </ItemGroup>
 
   <ItemGroup>
