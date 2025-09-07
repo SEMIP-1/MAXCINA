@@ -8,8 +8,20 @@ namespace MAXCINA.Areas.Admin.Controllers
         private ApplicationDbContext _context = new();
         public IActionResult Index()
         {
-            var movies=_context.Movies;
+            var movies=_context.Movies.OrderBy(m=>m.MovieStatus);
             return View(movies.ToList());
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Movies movie)
+        {
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
