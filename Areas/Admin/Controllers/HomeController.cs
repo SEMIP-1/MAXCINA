@@ -9,5 +9,9 @@ namespace MAXCINA.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult NotfoundPage()
+        {
+            return View();
+        }
     }
 }
