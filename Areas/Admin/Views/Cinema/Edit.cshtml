@@ -1,8 +1,9 @@
-﻿
+﻿@model Cinemas
+
 <div class="container">
     <div class="row mb-3 align-items-center my-3">
         <div class="col-md-6">
-            <h2 class="display-6">Create new Cinema</h2>
+            <h2 class="display-6">Edit Cinemas: @Model.Name</h2>
         </div>
     </div>
 
@@ -12,26 +13,26 @@
                 <!-- Name Section-->
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input class="form-control" id="name" name="Name">
+                    <input class="form-control" id="name" name="Name" value="@Model.Name">
                 </div>
                 <!-- Description Section-->
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a description here" style="height: 100px" name="Description"></textarea>
+                        <textarea class="form-control" placeholder="Leave a description here" style="height: 100px" name="Description">@Model.Description</textarea>
                         <label for="description">You Description Here...</label>
                     </div>
                 </div>
                 <!-- CinemaLogo Section-->
                 <div class="mb-3">
                     <label for="CinemaLogo" class="form-label">CinemaLogo</label>
-                    <input class="form-control" id="CinemaLogo" name="CinemaLogo">
+                    <input class="form-control" id="CinemaLogo" name="CinemaLogo" value="@Model.CinemaLogo">
                 </div>
                 <!-- Address Section-->
                 <div class="mb-3">
                     <label for="Address" class="form-label">Address</label>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a Address here" style="height: 100px" name="Address"></textarea>
+                        <textarea class="form-control" placeholder="Leave an Address here" style="height: 100px" name="Address">@Model.Address</textarea>
                         <label for="Address">Your Address Here...</label>
                     </div>
                 </div>
@@ -40,6 +41,7 @@
         </div>
     </div>
 </div>
+<!-- JavaScrippt Section-->
 
 <script>
     function previewImage(event) {

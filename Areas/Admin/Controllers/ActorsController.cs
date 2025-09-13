@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MAXCINA.Areas.Admin.Controllers
 {
-    [Area(SD.Area_Admin) ]
-    public class CinemaController : Controller
+    [Area(SD.Area_Admin)]
+    public class ActorsController : Controller
     {
         private ApplicationDbContext _context = new();
         public IActionResult Index()
         {
-            var cinema = _context.Cinemas.OrderBy(m => m.Id);
-            return View(cinema.ToList());
+            var actors = _context.Actors.OrderBy(m => m.ActorsId);
+            return View(actors.ToList());
         }
-        //----------------------------------------------------------------
+        //---------------------------------------------------------------
         #region Create
         [HttpGet]
         public IActionResult Create()
@@ -20,9 +20,9 @@ namespace MAXCINA.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Cinemas cinemas)
+        public IActionResult Create(Actors actor)
         {
-            _context.Cinemas.Add(cinemas);
+            _context.Actors.Add(actor);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
@@ -32,18 +32,18 @@ namespace MAXCINA.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var Cinemas = _context.Cinemas.FirstOrDefault(m => m.Id == id);
-            if (Cinemas is null)
+            var actors = _context.Actors.FirstOrDefault(m => m.ActorsId == id);
+            if (actors is null)
             {
                 return NotFound();
                 //RedirectToAction(SD.NotFoundPage,controllerName: SD.HomeController);
             }
-            return View(Cinemas);
+            return View(actors);
         }
         [HttpPost]
-        public IActionResult Edit(Cinemas cinemas)
+        public IActionResult Edit(Actors actors)
         {
-            _context.Cinemas.Update(cinemas);
+            _context.Actors.Update(actors);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
@@ -52,12 +52,13 @@ namespace MAXCINA.Areas.Admin.Controllers
         #region Delete
         public IActionResult Delete(int id)
         {
-            var cinemas = _context.Cinemas.FirstOrDefault(m => m.Id == id);
-            if (cinemas is null)
+            var actors = _context.Actors.FirstOrDefault(m => m.ActorsId == id);
+            if (actors is null)
             {
                 return NotFound();
+                //RedirectToAction(SD.NotFoundPage,controllerName: SD.HomeController);
             }
-            _context.Cinemas.Remove(cinemas);
+            _context.Actors.Remove(actors);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row mb-3 align-items-center my-3">
         <div class="col-md-6">
-            <h2 class="display-6">Movies Dashboard</h2>
+            <h2 class="display-6">Cinemas Dashboard</h2>
         </div>
         <div class="col-md-6 text-md-end text-start mt-2 mt-md-0">
             <a href="/admin/cinema/create" class="btn btn-success">Create</a>
@@ -17,9 +17,9 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Cinema Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Address</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -27,8 +27,11 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <!-- Id Section-->
                             <th scope="row">@item.Id</th>
+							<!-- Name Section-->
                             <td>@item.Name</td>
+							<!-- Description Section-->
                             @if (item.Description is not null && item.Description.Length >= 50)
                             {
                                 <td>@item.Description.Substring(0, 50)...</td>
@@ -37,10 +40,22 @@
                             {
                                 <td>@item.Description</td>
                             }
+							<!-- Address Section-->
+                            @if (item.Address is not null && item.Address.Length >= 20)
+                            {
+                                <td>@item.Address.Substring(0, 20)...</td>
+                            }
+                            else
+                            {
+                                <td>@item.Address</td>
+                            }
+							<!-- Actions Section-->
                             <td>
-                                <a href="/Admin/Movies/Edit/@item.Id" type="button" class="btn btn-warning">Edit</a>
-                                <a href="javascript:void(0);" data-url="/Admin/Movies/Delete/@item.Id" class="btn btn-danger btn-delete">Delete</a>
-                            </td>
+                                <!-- Edit Section-->
+                                <a href="/Admin/Cinema/Edit/@item.Id" type="button" class="btn btn-warning">Edit</a>
+							    <!-- Delete Section-->
+                                <button type="button" class="btn btn-danger delete-btn" data-id="@item.Id">Delete</button>
+                            </td>       
                         </tr>
                     }
                 </tbody>
@@ -48,31 +63,31 @@
         </div>
     </div>
 </div>
-
+<!-- Java Script-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".btn-delete").forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.preventDefault();
+        const deleteButtons = document.querySelectorAll(".delete-btn");
 
-                const deleteUrl = this.getAttribute("data-url");
+        deleteButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                const Id = this.getAttribute("data-id");
 
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
+                    title: "Are you sure?",
+                    text: "You won’t be able to revert this!",
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = deleteUrl;
+                        // Redirect to your delete action
+                        window.location.href = `/Admin/Cinema/Delete/${Id}`;
                     }
                 });
             });
         });
     });
 </script>
-
-

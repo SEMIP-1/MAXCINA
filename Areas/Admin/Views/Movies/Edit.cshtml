@@ -1,20 +1,21 @@
 ﻿@model MoviesEditVM
 
-
 <div class="container">
     <div class="row mb-3 align-items-center my-3">
         <div class="col-md-6">
-            <h2 class="display-6">Create new Movie</h2>
+            <h2 class="display-6">Edit Movie: @Model.Movie.Name</h2>
         </div>
     </div>
 
     <div class="row my-3">
         <div class="col-12">
             <form method="post" enctype="multipart/form-data">
+				<!-- Name Section-->
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input class="form-control" id="name" name="Name" value="@Model.Movie.Name">
                 </div>
+				<!-- Description Section-->
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <div class="form-floating">
@@ -22,41 +23,50 @@
                         <label for="description">You Description Here...</label>
                     </div>
                 </div>
+                <!-- Price Section-->
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
-                    <input type="number" class="form-control" id="name" name="Price" value="@Model.Movie.Price">
+                    <input type="number" class="form-control" id="Price" name="Price" value="@Model.Movie.Price">
                 </div>
-                @* <div class="mb-3">
+                <!-- Picture Section-->
+                <div class="mb-3">
                     <label for="Img" class="form-label">Img</label>
                     <input type="file" class="form-control" id="ImgUrl" name="ImgUrl" value="@Model.Movie.ImgUrl" accept="image/*" onchange="previewImage(event)">
                 </div>
                 <div class="mb-3">
                     <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
-                </div> *@
+                </div>
+                <!-- StartDate Section-->
                 <div class="mb-3">
                     <label for="StartDate" class="form-label">Start Date</label>
                     <input type="datetime" class="form-control" id="StartDate" name="StartDate" value="@Model.Movie.StartDate">
                 </div>
+				<!-- EndDate Section-->
                 <div class="mb-3">
                     <label for="EndDate" class="form-label">End Date</label>
                     <input class="form-control" id="EndDate" name="EndDate" value="@Model.Movie.EndDate">
                 </div>
+				<!-- MovieStatus Section-->
                 <div class="mb-3">
                     <label for="MovieStatus" class="form-label">Status</label>
                     <select class="form-select" id="MovieStatus" name="MovieStatus">
-                        @for (int i =0;i<3;i++)
+                        @for (int i =0;i<=3;i++)
                         {
-                            if (i+1 == Model.Movie.MovieStatus)
+                            if (i == Model.Movie.MovieStatus)
                             {
                                 if (i == 0)
                                 {
-                                    <option value="1" selected>Upcoming</option>
+                                    <option value="0" selected>Pending</option>
                                 }
                                 else if (i == 1)
                                 {
-                                    <option value="2" selected>Available</option>
+                                    <option value="1" selected>Upcoming</option>
                                 }
                                 else if (i == 2)
+                                {
+                                    <option value="2" selected>Available</option>
+                                }
+                                else if (i == 3)
                                 {
                                     <option value="3" selected>Expired</option>
                                 }
@@ -67,6 +77,7 @@
                         <option value="3">Expired</option>
                     </select>
                 </div>
+				<!-- Cinema Section-->
                 <div class="mb-3">
                     <label for="CinemaId" class="form-label">Cinema Name</label>
                     <select class="form-select" name="CinemaId">
@@ -83,9 +94,10 @@
                         }
                     </select>
                 </div>
+                <!-- Category Section-->
                 <div class="mb-3">
                     <label for="CategoryId" class="form-label">Category Name</label>
-                    <select class="form-select" id="Id" name="Id">
+                    <select class="form-select" id="CategoryId" name="CategoryId">
                         @foreach (var item in Model.Category)
                         {
                             if (item.Id == Model.Movie.CategoryId)

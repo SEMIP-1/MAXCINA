@@ -1,0 +1,68 @@
+﻿@model ActorMoviesVM
+@{
+    ViewData["Title"] = "Details Page";
+
+}
+<!-- Actor section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <!-- ProfilePicture section-->
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/img/customer/cast/@Model.actors.ProfilePicture" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: @Model.actors.ActorsId</div>
+                <!-- Name section-->
+                <h1 class="display-5 fw-bolder">@Model.actors.FirstName @Model.actors.LastName</h1>
+                <!-- Bio Section-->
+                <p class="lead">@Model.actors.Bio</p>
+                <!-- News Section-->
+                <p class="lead">@Model.actors.News</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related movie section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">Related products</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model.actorMovies)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="~/img/customer/movies/@item.Movies.ImgUrl" alt="@item.Movies.ImgUrl" />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@item.Movies.Name</h5>
+                                <!-- Product reviews-->
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <!-- Product price-->
+                                <span class="text-muted text-decoration-line-through">@(item.Movies.Price * 1.2)</span>
+                                @item.Movies.Price
+                            </div>
+                            <div>
+                                <!-- Product Start Date/End Date-->
+                            </div>
+                            <h5 class="text-muted text-decoration">@item.Movies.StartDate</h5>
+                            <h5 class="text-muted text-decoration">@item.Movies.EndDate</h5>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/customer/home/moviedetails/@item.MoviesId">More Details</a></div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

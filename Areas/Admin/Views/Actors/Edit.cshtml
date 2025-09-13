@@ -1,0 +1,72 @@
+﻿@model Actors
+
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">Edit Actor: @Model.FirstName @Model.LastName</h2>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+				<!-- First Name Section-->
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">FirstName</label>
+                    <input class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName">
+                </div>
+                <!-- Last Name Section-->
+                <div class="mb-3">
+                    <label for="LastName" class="form-label">LastName</label>
+                    <input class="form-control" id="LastName" name="LastName" value="@Model.LastName">
+                </div>
+                <!-- ProfilePicture Section-->
+                <div class="mb-3">
+                    <label for="ProfilePicture" class="form-label">ProfilePicture</label>
+                    <input type="ProfilePicture" class="form-control" id="ProfilePicture" name="ProfilePicture" value="@Model.ProfilePicture" accept="ProfilePicture/*" onchange="previewImage(event)">
+                </div>
+                <div class="mb-3">
+                    <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <!-- Bio Section-->
+                <div class="mb-3">
+                    <label for="Bio" class="form-label">Bio</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a Bio here" style="height: 100px" name="Bio">@Model.Bio</textarea>
+                        <label for="Bio">You Bio Here...</label>
+                    </div>
+                </div>
+                <!-- News Section-->
+                <div class="mb-3">
+                    <label for="News" class="form-label">News</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a News here" style="height: 100px" name="News">@Model.News</textarea>
+                        <label for="News">You News Here...</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("preview");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = "#";
+            preview.style.display = "none";
+        }
+    }
+</script>

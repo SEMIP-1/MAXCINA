@@ -30,9 +30,10 @@ namespace MAXCINA.Areas.Admin.Controllers
             _context.Movies.Add(movie);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
-        } 
+        }
         #endregion
         //---------------------------------------------------------------
+        #region Edit
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -58,7 +59,21 @@ namespace MAXCINA.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        #endregion
         //---------------------------------------------------------------
-
+        #region Delete
+        public IActionResult Delete(int id)
+        {
+            var movies = _context.Movies.FirstOrDefault(m => m.MoviesId == id);
+            if (movies is null)
+            {
+                return NotFound();
+                //RedirectToAction(SD.NotFoundPage,controllerName: SD.HomeController);
+            }
+            _context.Movies.Remove(movies);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }
