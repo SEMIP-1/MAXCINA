@@ -32,10 +32,42 @@ namespace MAXCINA.Areas.Customer.Controllers
         }
         //---------------------------------------------------------------
         #region Movies
-        public IActionResult Movies()
+        public IActionResult Movies(string? Name, double? MinPrice, double? MaxPrice,int? categoryId,int? cinemaId/*,bool isTranding*/)
         {
-            var movies = _context.Movies.Include(m => m.Category);
-            return View(movies.ToList());
+            var movies = _context.Movies.Include(m => m.Category).Include(m=>m.Cinema).AsQueryable();
+            if (!string.IsNullOrEmpty(Name))
+            {
+                movies = movies.Where(m => m.Name.Contains(Name));
+            }
+            if (MinPrice.HasValue)
+            {
+                movies = movies.Where(m => m.Price >= MinPrice.Value);
+            }
+            if (MaxPrice.HasValue)
+            {
+                movies = movies.Where(m => m.Price <= MaxPrice.Value);
+            }
+            if (categoryId.HasValue && categoryId.Value != 0)
+            {
+                movies = movies.Where(m => m.CategoryId == categoryId);
+            }
+            if (cinemaId.HasValue && cinemaId.Value != 0)
+            {
+                movies = movies.Where(m => m.CinemaId == cinemaId);
+            }
+            //if (isTranding)
+            //{
+            //    movies = movies.Where(m => m.MovieStatus == SD.Status_Trending);
+            //}
+            var categories = _context.Categories;
+            var cinemas = _context.Cinemas;
+
+            return View(new MoviesFilterVM 
+            { 
+                movies = movies.ToList(),
+                categories = categories.ToList(),
+                cinemas = cinemas.ToList()
+            } );
         }
         //---------------------------------------------------------------
         public IActionResult MovieDetails(int id)
