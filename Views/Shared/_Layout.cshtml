@@ -16,15 +16,15 @@
          <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="https://localhost:7116/customer/home">MAXCINA</a>
+                <a class="navbar-brand" href="/customer/home">MAXCINA</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="https://localhost:7116/customer/home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/customer/home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://localhost:7116/customer/home/movies">Movies</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://localhost:7116/customer/home/Cinema">Cinema</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://localhost:7116/customer/home/Actors">Actors</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/customer/home/movies">Movies</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/customer/home/Cinema">Cinema</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/customer/home/Actors">Actors</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -46,21 +46,21 @@
             </div>
         </nav>
     </header>
-    <!-- Footer-->
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- Body-->
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
      <!-- Footer-->
-     <footer class="py-5 bg-dark">
-         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-     </footer>   
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <footer class="border-top footer text-bg-dark">
+        <div class="container  d-flex justify-content-center">  
+            &copy; 2025 - MAXCINA - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/customer/scripts.js" asp-append-version="true"></script>
-
+    <script src="~/js/customer/scripts.js asp-append-version="true"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

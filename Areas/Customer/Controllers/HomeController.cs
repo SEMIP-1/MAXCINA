@@ -32,35 +32,47 @@ namespace MAXCINA.Areas.Customer.Controllers
         }
         //---------------------------------------------------------------
         #region Movies
-        public IActionResult Movies(string? Name, double? MinPrice, double? MaxPrice,int? categoryId,int? cinemaId/*,bool isTranding*/)
+        public IActionResult Movies(FilterVM filterVM, int page = 1)
         {
             var movies = _context.Movies.Include(m => m.Category).Include(m=>m.Cinema).AsQueryable();
-            if (!string.IsNullOrEmpty(Name))
+            if (!string.IsNullOrEmpty(filterVM.Name))
             {
-                movies = movies.Where(m => m.Name.Contains(Name));
+                movies = movies.Where(m => m.Name.Contains(filterVM.Name));
+                ViewBag.Name = filterVM.Name;
             }
-            if (MinPrice.HasValue)
+            if (filterVM.MinPrice.HasValue)
             {
-                movies = movies.Where(m => m.Price >= MinPrice.Value);
+                movies = movies.Where(m => m.Price >= filterVM.MinPrice.Value);
+                ViewBag.MinPrice = filterVM.MinPrice;
             }
-            if (MaxPrice.HasValue)
+            if (filterVM.MaxPrice.HasValue)
             {
-                movies = movies.Where(m => m.Price <= MaxPrice.Value);
+                movies = movies.Where(m => m.Price <= filterVM.MaxPrice.Value);
+                ViewBag.MaxPrice = filterVM.MaxPrice;
             }
-            if (categoryId.HasValue && categoryId.Value != 0)
+            if (filterVM.categoryId.HasValue && filterVM.categoryId.Value != 0)
             {
-                movies = movies.Where(m => m.CategoryId == categoryId);
+                movies = movies.Where(m => m.CategoryId == filterVM.categoryId);
+                ViewBag.CategoryId = filterVM.categoryId;
             }
-            if (cinemaId.HasValue && cinemaId.Value != 0)
+            if (filterVM.cinemaId.HasValue && filterVM.cinemaId.Value != 0)
             {
-                movies = movies.Where(m => m.CinemaId == cinemaId);
+                movies = movies.Where(m => m.CinemaId == filterVM.cinemaId);
+                ViewBag.CinemaId = filterVM.cinemaId;
             }
-            //if (isTranding)
-            //{
-            //    movies = movies.Where(m => m.MovieStatus == SD.Status_Trending);
-            //}
+            if (filterVM.isTranding)
+            {
+                movies = movies.OrderBy(m=>m.Traffic);
+                ViewBag.isTranding = filterVM.isTranding;
+            }
             var categories = _context.Categories;
             var cinemas = _context.Cinemas;
+            var NumberOfMoviesPerPage =Math.Ceiling( movies.Count()/8.0);
+            var CurrentPage = page; 
+            ViewBag.NumberOfMoviesPerPage = NumberOfMoviesPerPage;
+            ViewBag.CurrentPage = CurrentPage;
+
+            movies = movies.Skip((page - 1) * 8).Take(8);
 
             return View(new MoviesFilterVM 
             { 

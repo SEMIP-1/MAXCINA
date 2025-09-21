@@ -19,5 +19,6 @@
         // Navigation Properties
         public List<Actors> Actors { get; set; }
         public List<OrderItem> OrderItems { get; set; }
+        public int Traffic { get; set; }
     }
 }
