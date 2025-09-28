@@ -32,7 +32,7 @@ namespace MAXCINA.Areas.Customer.Controllers
         }
         //---------------------------------------------------------------
         #region Movies
-        public IActionResult Movies(FilterVM filterVM, int page = 1)
+        public IActionResult Movies(FilterVM filterVM, int page = 2)
         {
             var movies = _context.Movies.Include(m => m.Category).Include(m=>m.Cinema).AsQueryable();
             if (!string.IsNullOrEmpty(filterVM.Name))
@@ -67,9 +67,9 @@ namespace MAXCINA.Areas.Customer.Controllers
             }
             var categories = _context.Categories;
             var cinemas = _context.Cinemas;
-            var NumberOfMoviesPerPage =Math.Ceiling( movies.Count()/8.0);
+            var TotalNumberOfPages =Math.Ceiling( movies.Count()/8.0);
             var CurrentPage = page; 
-            ViewBag.NumberOfMoviesPerPage = NumberOfMoviesPerPage;
+            ViewBag.TotalNumberOfPages = TotalNumberOfPages;
             ViewBag.CurrentPage = CurrentPage;
 
             movies = movies.Skip((page - 1) * 8).Take(8);
