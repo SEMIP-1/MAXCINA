@@ -32,7 +32,7 @@ namespace MAXCINA.Areas.Customer.Controllers
         }
         //---------------------------------------------------------------
         #region Movies
-        public IActionResult Movies(FilterVM filterVM, int page = 2)
+        public IActionResult Movies(FilterVM filterVM, int page = 1)
         {
             var movies = _context.Movies.Include(m => m.Category).Include(m=>m.Cinema).AsQueryable();
             if (!string.IsNullOrEmpty(filterVM.Name))

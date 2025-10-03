@@ -11,8 +11,7 @@
             <div class="col-md-6">
                 <div class="small mb-1">SKU: @Model.Movie.MoviesId</div>
                 <h1 class="display-5 fw-bolder">@Model.Movie.Name</h1>
-                <div class="fs-5 mb-5">
-                    <span class="text-decoration-line-through">$35.00</span>
+                <div class="fs-5 mb-5">                    
                     <span>$@Model.Movie.Price</span>
                 </div>
                 <p class="lead">@Model.Movie.Description</p>
@@ -24,10 +23,19 @@
                     </button>
                 </div>
                 <div class="col-md-6">
+                    <iframe width="560" height="315"
+                            src="@Model.Movie.TrailerUrl"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                @* <div class="col-md-6">
                     <video width="320" height="240" controls>
                         <source src="@Model.Movie.TrailerUrl">
                     </video>
-                </div>
+                </div> *@
             </div>
         </div>
     </div>

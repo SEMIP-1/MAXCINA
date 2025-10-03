@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MAXCINA.Areas.Admin.Controllers
 {
@@ -8,7 +10,7 @@ namespace MAXCINA.Areas.Admin.Controllers
         private ApplicationDbContext _context = new();
         public IActionResult Index()
         {
-            var movies=_context.Movies.OrderBy(m=>m.MovieStatus);
+            var movies = _context.Movies;//.OrderBy(m=>m.MovieStatus);
             return View(movies.ToList());
         }
         //---------------------------------------------------------------
@@ -25,8 +27,19 @@ namespace MAXCINA.Areas.Admin.Controllers
             });
         }
         [HttpPost]
-        public IActionResult Create(Movies movie)
+        public IActionResult Create(Movies movie, IFormFile ImgUrl)
         {
+            if (ImgUrl is null)
+            {
+                return BadRequest();
+            }
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\customer\\movies", fileName);
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                ImgUrl.CopyTo(stream);
+            }
+            movie.ImgUrl = fileName;
             _context.Movies.Add(movie);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -53,8 +66,40 @@ namespace MAXCINA.Areas.Admin.Controllers
             });
         }
         [HttpPost]
-        public IActionResult Edit(Movies movie)
+        public IActionResult Edit(Movies movie, IFormFile? ImgUrl)
         {
+            var MovieInDb = _context.Movies.AsNoTracking().FirstOrDefault(e=>e.MoviesId==movie.MoviesId);
+
+            if (MovieInDb is null)
+                return NotFound();
+
+            if (ImgUrl is not null)
+            {
+                // Save img in wwwroot
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
+                // djsl-kds232-91321d-sadas-dasd213213.png
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\customer\\movies", fileName);
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    ImgUrl.CopyTo(stream);
+                }
+
+                // Remove old Img from wwwroot
+                var oldFileName = MovieInDb.ImgUrl;
+                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\customer\\movies", oldFileName);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                // Save img in DB
+                movie.ImgUrl = fileName;
+            }
+            else
+            {
+                movie.ImgUrl = MovieInDb.ImgUrl;
+            }
             _context.Movies.Update(movie);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

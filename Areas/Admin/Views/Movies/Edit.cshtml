@@ -30,12 +30,20 @@
                 </div>
                 <!-- Picture Section-->
                 <div class="mb-3">
-                    <label for="Img" class="form-label">Img</label>
-                    <input type="file" class="form-control" id="ImgUrl" name="ImgUrl" value="@Model.Movie.ImgUrl" accept="image/*" onchange="previewImage(event)">
+                    <label for="ImgUrl" class="form-label">ImgUrl</label>
+                    <input type="file" class="form-control" id="ImgUrl" name="ImgUrl" accept="image/*" onchange="previewImage(event)">
                 </div>
                 <div class="mb-3">
-                    <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+                    <img id="preview"
+                         src="~/img/customer/movies/@Model.Movie.ImgUrl"
+                         alt="Current Image"
+                         style="max-width: 200px; border:1px solid #ccc; padding:5px; border-radius:10px;" />
                 </div>
+				<!-- TrailerUrl Section-->
+                <div class="mb-3">
+                    <label for="TrailerUrl" class="form-label">TrailerUrl</label>
+					<input class="form-control" id="TrailerUrl" name="TrailerUrl" value="@Model.Movie.TrailerUrl">
+				</div>
                 <!-- StartDate Section-->
                 <div class="mb-3">
                     <label for="StartDate" class="form-label">Start Date</label>
@@ -125,16 +133,10 @@
 
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-
             reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = "block";
+                preview.src = e.target.result; // الصورة الجديدة
             }
-
             reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = "#";
-            preview.style.display = "none";
         }
     }
 </script>
